@@ -1,7 +1,7 @@
 ---
 name: User Story
 about: user story preset
-title: ''
+title: User Story
 labels: ''
 assignees: ''
 
