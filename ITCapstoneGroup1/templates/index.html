@@ -14,18 +14,18 @@
 
     
     <div class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-white text-4xl mb-4 text-shadow-lg/30">Fitness Tracker 🏃🏋</h1>
+    <h1 class=" text-white text-4xl mb-4 text-shadow-lg/30">Fitness Tracker 🏃🏋</h1>
     <form class=" grid grid-rows-3  h-70 w-90 overflow-hidden bg-gray-950/40 shadow-md rounded-xl px-10 pt-6 pb-8" action="{{ url_for('user_credentials') }}" method="post">
     <div class=" w-full">
     <label class=" text-white" for="email">Email</label>
-    <input class=" mt-2 w-full bg-gray-950/20  rounded py-1 px-1 " type="text" id="email" name="email"><br><br>
+    <input class=" text-white mt-2 w-full bg-gray-950/20  rounded py-1 px-1 " type="text" id="email" name="email"><br><br>
     </div>
     <div class=" mt-3">
     <label class="text-white " for="password">Password</label>
-    <input class=" mt-2 w-full bg-gray-950/20 rounded py-1 px-1  type="password" id="password" name="password"><br><br>
+    <input class="text-white mt-2 w-full bg-gray-950/20 rounded py-1 px-1 " type="password" id="password" name="password"><br><br>
     </div>
     <div class="row-span-3 mt-10 text-center">
-      <input class=" me-16 text-white px-5 py-1 border-1 border-white rounded-md hover:bg-white hover:text-black" type="submit" value="Login">
+      <input class=" me-16 text-white px-5 py-1 border-1 border-white rounded-md hover:bg-white hover:text-black hover:animate-pulse" type="submit" value="Login">
       
       <a class="text-zinc-50/40 hover:text-white" href="{{ url_for('signup') }}">New User? </a>
     </div>
