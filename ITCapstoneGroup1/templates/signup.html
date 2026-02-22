@@ -1,0 +1,37 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+       
+        
+      <title>Fitness Tracker Login</title>
+  </head>
+
+
+ 
+  <body class=" bg-gradient-to-b from-indigo-950 to-teal-500">
+
+    
+    <div class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-white text-4xl mb-4 text-shadow-lg/30">Fitness Tracker 🏃🏋</h1>
+    <form class=" grid grid-rows-3  h-70 w-90 overflow-hidden bg-gray-950/40 shadow-md rounded-xl px-10 pt-6 pb-8" action="{{ url_for('signup_user') }}" method="post">
+    <div class=" w-full">
+    <label class=" text-white" for="email">Email</label>
+    <input class=" mt-2 w-full bg-gray-950/20  rounded py-1 px-1 " type="text" id="email" name="email"><br><br>
+    </div>
+    <div class=" mt-3">
+    <label class="text-white " for="password">Password</label>
+    <input class=" mt-2 w-full bg-gray-950/20 rounded py-1 px-1  type="password" id="password" name="password"><br><br>
+    </div>
+    <div class="row-span-3 mt-10 text-center">
+      <input class=" bg-zinc-50/90 text-black px-5 py-1  rounded-md hover:bg-white hover:text-black" type="submit" value="Create Account">
+
+    </div>
+    </form>
+    </div>
+
+  </body>
+</html>
