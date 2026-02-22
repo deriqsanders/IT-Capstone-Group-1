@@ -17,7 +17,7 @@ Check off the features you implemented (must have at least 4 and 2 are implemete
 - Flask 3.0.0
 - Requests 2.31.0
 - Firebase Auth REST API
-- Tailwind CSS `for guidance on how to use, visit:`https://tailwindcss.com/docs/styling-with-utility-classes
+- Tailwind CSS `for guidance on how to use, visit: https://tailwindcss.com/docs/styling-with-utility-classes`
 
 ## Installation and Setup
 
