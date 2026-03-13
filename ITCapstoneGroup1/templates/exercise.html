@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <title>Fitness Tracker</title>
+  </head>
+
+  <body class=" h-screen bg-gradient-to-b from-indigo-950 to-teal-500"></body>
+ 
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <form class=" grid grid-rows-4 h-100 w-90  bg-white shadow-md rounded-xl pt-6 pb-8" action="{{ url_for('add_exercise') }}" method="post">
+    <div class=" w-full">
+    <label class=" text-gray-700 ml-10" for="name">Exercise Name</label>
+    <input class=" text-gray-700 mt-2 ml-10 bg-gray-700/20  rounded py-1 px-7 " type="text" id="name" name="name"><br><br>
+    <hr class=" border-gray-200">
+    </div>
+
+    <div class="grid grid-cols-3 ml-10 gap-4 mt-5">
+
+     
+      <label class="text-gray-700 " for="repetitions">Repetitions</label>
+      <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0"  id="repetitions" name="repetitions"><br><br>
+     
+    
+      <label class="text-gray-700 " for="weight">Weight</label>
+      <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0"  id="weight" name="weight"><br><br>
+      
+      
+      <label class="text-gray-700 " for="sets">Sets</label>
+      <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0" id="sets" name="sets"><br><br>
+   
+    </div>
+
+     <div class="mt-35 text-center">
+      <input class=" me-10 text-gray-700 px-2 py-1 rounded-md hover:bg-white hover:text-black hover:animate-pulse" type="submit" value="Add Exercise">
+      
+      <a class="text-gray-400 hover:text-gray-800" href="{{ url_for('home') }}">Return Home</a>
+    </div>
+  
+    </form>
+    </div>
+ 
+
+
+
+  </body>
+</html>
