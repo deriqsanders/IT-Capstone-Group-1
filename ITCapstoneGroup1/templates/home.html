@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
-          
+         
+
         </script>
           
     
@@ -11,6 +12,7 @@
     <title>Fitness Tracker</title>
   </head>
 
+  
 
  
   <body class="  h-screen bg-gradient-to-b from-indigo-950 to-teal-500">
@@ -421,7 +423,7 @@
         <div id="12-30" class="col-start-2 row-start-5 h-2 w-2  bg-white/30 shadow-md rounded-xs"></div>
       </div>
       <div class=" border-1 border-white/30 rounded-md px-2 py-1 w-40 grid grid-rows-2 col-span-2 row-start-5 text-blue-100 text-xs ">
-      <label class="text-blue-100 row-start-1 text-xs">Total workouts: {{ workout_count }} 🔥</label>
+      <label class="text-blue-100 row-start-1 text-xs">Total workouts: {{ workouttotal }} {{ streak }}  </label>
       <label class="text-blue-100 row-start-2 text-xs">Total distance:</label>
       
       </div>
@@ -435,6 +437,32 @@
        
    
     </div>
+
+    <script>
+      
+       console.log("Hello, World!");
+
+       //Jinja variable passed to JavaScript, it shows "property assignment expected" error in VSCode but it works fine in the browser console, so it's just a quirk of the editor
+       const pythonData = {{ highlighted_dates | tojson }};
+
+       console.log("Data from Python:", pythonData);
+         
+      
+         pythonData.forEach(date => {
+           const element = document.getElementById(date);
+           if (element) {
+            element.classList.remove('bg-white/30');
+             element.classList.add('bg-white');
+           }
+         });
+       
+        
+         
+     
+    
+    </script>
+   
+    
  
       
 

@@ -1,9 +1,12 @@
 
+from collections import Counter
+
 import firebase_admin
 from flask import Flask, redirect, request, render_template, url_for, current_app, g
 import json
 import requests
 import datetime
+from datetime import date, timedelta
 
 import firebase_admin
 from firebase_admin import credentials, firestore  
@@ -14,7 +17,7 @@ from dotenv import load_dotenv
 
 
 
-load_dotenv('ITCapstoneGroup1/itcapstone.env')
+load_dotenv('itcapstone.env')
 
 api_key = os.getenv('API_KEY')
 
@@ -111,38 +114,50 @@ def user_credentials():
 @app.route('/home')
 def home():
 
-    workout_ref = db.collection('workouts')
+    currentdate = datetime.datetime.now().strftime("%m-%d")
 
-    count_query = workout_ref.count()
-    count_result = count_query.get()
-    workout_count = count_result[0][0].value
-
-    docs = workout_ref.stream()
+    todaysdate = date.today()
+    breakstreakdate = todaysdate - timedelta(days=2)
+ 
     
+
+    workout_ref = db.collection('workouts')
+    docs = workout_ref.stream()
 
     dates = u'date'
     highlighted_dates = []
-
+    
     for doc in docs:
            
-        
-
-        
-    
         doc_dict = doc.to_dict()
-        
+       
         if dates in doc_dict:
             print(f"Workout date: {doc_dict[dates]}")
-            highlighted_dates.append(doc_dict[dates])
-            json_string = json.dumps(highlighted_dates)
-            print(json_string)
+            highlighted_dates.append(doc_dict[dates])  
+            
         else:
             print("No date field found in document.")
 
-    print(f"Total workouts in Firestore: {workout_count}")
-
+    counts = Counter(highlighted_dates).keys()
+    workouttotal = len(counts)
+    print(workouttotal)
     
-    return render_template('home.html', workout_count=workout_count, date_data=json_string, highlighted_dates=highlighted_dates)
+    datesinorder = sorted(highlighted_dates)
+    lastdate = datesinorder[-1]
+    print(currentdate)
+    
+    lastWorkoutDate = datetime.datetime.strptime(lastdate, "%m-%d").date()
+    lastWorkoutDatewithyear = lastWorkoutDate.replace(year=todaysdate.year)
+    print(lastWorkoutDatewithyear)
+    if lastWorkoutDatewithyear > breakstreakdate:
+        streak = "🔥"
+    else:
+        streak = "❄️"
+    
+    print(streak)
+    
+    
+    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak)
 
 @app.route('/exercise')
 def exercise():
