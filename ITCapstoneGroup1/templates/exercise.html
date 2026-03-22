@@ -10,30 +10,48 @@
   <body class=" h-screen bg-gradient-to-b from-indigo-950 to-teal-500"></body>
  
   <div class="flex flex-col items-center justify-center min-h-screen">
-    <form class=" grid grid-rows-4 h-100 w-90  bg-white shadow-md rounded-xl pt-6 pb-8" action="{{ url_for('add_exercise') }}" method="post">
+    <form class=" grid grid-rows-4 h-120 w-90  bg-white shadow-md rounded-xl pt-6 pb-8" action="{{ url_for('add_exercise') }}" method="post">
     <div class=" w-full">
     <label class=" text-gray-700 ml-10" for="name">Exercise Name</label>
+    
     <input class=" text-gray-700 mt-2 ml-10 bg-gray-700/20  rounded py-1 px-7 " type="text" id="name" name="name"><br><br>
-    <hr class=" border-gray-200">
+
+
+    <label class="ml-10 inline-flex items-bottom cursor-pointer">
+    <input type="checkbox" id="cardio" value="" class="sr-only peer">
+    <div class="relative w-9 h-5 bg-black/20 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
+    <span class=" select-none text-gray-500 ms-2">Cardio</span>
+    
+    </label>
+   
+    
+    <hr class=" mt-2 border-gray-200">
     </div>
 
-    <div class="grid grid-cols-3 ml-10 gap-4 mt-5">
+    <div class="grid grid-cols-3 ml-10 gap-4 mt-10">
 
      
-      <label class="text-gray-700 " for="repetitions">Repetitions</label>
+      <label class="text-gray-700 " id="repetitions-label" for="repetitions">Repetitions</label>
       <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0"  id="repetitions" name="repetitions"><br><br>
      
     
-      <label class="text-gray-700 " for="weight">Weight</label>
+      <label class="text-gray-700 " id="weight-label" for="weight">Weight</label>
       <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0"  id="weight" name="weight"><br><br>
       
       
-      <label class="text-gray-700 " for="sets">Sets</label>
+      <label class="text-gray-700 " id="sets-label" for="sets">Sets</label>
       <input class="text-gray-700 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " type="number" min="0" id="sets" name="sets"><br><br>
+
+      <label class="text-gray-700 grid col-1 row-1" style="display: none;" id="distance-label" for="distance">Distance (mi)</label>
+      <input class="text-gray-700 grid col-2 row-1 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " style="display: none;" type="number" min="0"  id="distance" name="distance" step=".01"><br><br>
+      
+      
+      <label class="text-gray-700 grid col-1 row-1 mt-20" style="display: none;" id="time-label" for="time">Time (min)</label>
+      <input class="text-gray-700 grid col-2 row-1 mt-20 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 " style="display: none;" type="number" min="0" id="time" name="time"><br><br>
    
     </div>
 
-     <div class="mt-35 text-center">
+     <div class="mt-40 text-center">
       <input class=" me-10 text-gray-700 px-2 py-1 rounded-md hover:bg-white hover:text-black hover:animate-pulse" type="submit" value="Add Exercise">
       
       <a class="text-gray-400 hover:text-gray-800" href="{{ url_for('home') }}">Return Home</a>
@@ -41,6 +59,47 @@
   
     </form>
     </div>
+
+     <script>
+      const checkbox = document.getElementById('cardio');
+      const repetitionsLabel = document.getElementById('repetitions-label');
+      const repetitionsInput = document.getElementById('repetitions');
+      const weightLabel = document.getElementById('weight-label');
+      const weightInput = document.getElementById('weight');
+      const setsLabel = document.getElementById('sets-label');
+      const setsInput = document.getElementById('sets');
+      const distanceLabel = document.getElementById('distance-label');
+      const distanceInput = document.getElementById('distance');
+      const timeLabel = document.getElementById('time-label');
+      const timeInput = document.getElementById('time');
+
+      checkbox.addEventListener('change', function() {
+        if (checkbox.checked) {
+          repetitionsLabel.style.display = 'none';
+          repetitionsInput.style.display = 'none';
+          weightLabel.style.display = 'none';
+          weightInput.style.display = 'none';
+          setsLabel.style.display = 'none';
+          setsInput.style.display = 'none';
+          distanceLabel.style.display = 'block';
+          distanceInput.style.display = 'block';
+          timeLabel.style.display = 'block';
+          timeInput.style.display = 'block';
+          
+        } else {
+          repetitionsLabel.style.display = 'block';
+          repetitionsInput.style.display = 'block';
+          weightLabel.style.display = 'block';
+          weightInput.style.display = 'block';
+          setsLabel.style.display = 'block';
+          setsInput.style.display = 'block';
+          distanceLabel.style.display = 'none';
+          distanceInput.style.display = 'none';
+          timeLabel.style.display = 'none';
+          timeInput.style.display = 'none';
+        }
+      });
+    </script>
  
 
 

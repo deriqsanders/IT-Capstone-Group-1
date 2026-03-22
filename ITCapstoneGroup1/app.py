@@ -145,6 +145,9 @@ def home():
     datesinorder = sorted(highlighted_dates)
     lastdate = datesinorder[-1]
     print(currentdate)
+    totaldistance = workout_ref.where('distance', '!=', '').stream()
+    totaldistance = sum(float(doc.to_dict().get('distance', 0)) for doc in totaldistance)
+    print(totaldistance)
     
     lastWorkoutDate = datetime.datetime.strptime(lastdate, "%m-%d").date()
     lastWorkoutDatewithyear = lastWorkoutDate.replace(year=todaysdate.year)
@@ -157,7 +160,7 @@ def home():
     print(streak)
     
     
-    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak)
+    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak, totaldistance=totaldistance)
 
 @app.route('/exercise')
 def exercise():
@@ -172,6 +175,8 @@ def add_exercise():
     weight = request.form.get('weight')
     sets = request.form.get('sets')
     repetitions = request.form.get('repetitions')
+    distance = request.form.get('distance')
+    time = request.form.get('time')
 
     workout_ref = db.collection('workouts')
 
@@ -180,7 +185,9 @@ def add_exercise():
         "name": name,
         "weight": weight,
         "sets": sets,
-        "repetitions": repetitions
+        "repetitions": repetitions,
+        "distance": distance,
+        "time": time
     })
     return redirect(url_for('exercise'))
 
