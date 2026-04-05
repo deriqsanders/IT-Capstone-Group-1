@@ -2,10 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
-         
-
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
           
     
 
@@ -427,9 +425,148 @@
       <label class="text-blue-100 row-start-2 text-xs">Total distance: {{ totaldistance }} mi</label>
       
       </div>
-      <div class=" items-start grid grid-rows-2 col-span-2 col-start-3 row-start-5">
-      <a class="grid justify-end  font-medium text-blue-100  row-start-1 text-xs  hover:text-white" href="{{ url_for('exercise') }}">Start New Workout...</a>
+      <div class=" items-start px-5 grid grid-rows-2 col-span-2 col-start-3 row-start-5">
+      <a class="grid justify-begin  font-medium text-blue-100  row-start-1 text-xs  hover:text-white" href="{{ url_for('exercise') }}">Start New Workout...</a>
+      <button id="open-btn" class="grid justify-begin  font-medium text-blue-100/70  row-start-2 text-xs  hover:text-white">Create a Goal</button>
       </div>
+
+
+
+
+
+      <div id="modal" class="flex  fixed hidden insert-0 top-0 right-1px items-center justify-center " >
+       <div  class=" flex flex-col items-center justify-center min-h-screen">
+        <form class=" grid grid-rows-4 h-60 w-80  bg-white shadow-md rounded-xl pt-6 pb-8" action="{{ url_for('add_goal') }}" method="post">
+        <div class=" w-full">
+        <label class=" text-gray-700 ml-10" for="goalname">Goal Name</label>
+       
+        
+        <input class=" text-gray-700 mt-2 ml-10 bg-gray-700/20  rounded py-1 px-7 " type="text" id="goalname" name="goalname"><br><br>
+      
+        
+        
+        </div>
+
+        <div class="flex gap-x-3 ml-10 mt-10">
+
+        
+          <label class="text-gray-700 col-1 row-1" id="goaldate" for="goaldate">Date</label>
+          <select class="text-gray-700 col-1 row-2 h-8 w-18 bg-gray-700/20 rounded py-1 px-1 " id="goalmonth" name="goalmonth">
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sept</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+           <select class="text-gray-700 col-2 row-2 h-8 w-15 bg-gray-700/20 rounded py-1 px-1 "  id="goalday" name="goalday">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option hidden value="31">31</option>
+          </select>
+          
+          <script>
+            const monthSelect = document.getElementById('goalmonth');
+            const daySelect = document.getElementById('goalday');
+
+            function updateDays() {
+              const month = parseInt(monthSelect.value);
+              let daysInMonth;
+
+              if (month === 2) {
+                daysInMonth = 29; // Consider leap year for simplicity
+              } else if ([4, 6, 9, 11].includes(month)) {
+                daysInMonth = 30;
+              } else {
+                daysInMonth = 31;
+              }
+
+              // Clear existing options
+              daySelect.innerHTML = '';
+
+              // Add new options based on the selected month
+              for (let i = 1; i <= daysInMonth; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+              }
+            }
+
+            monthSelect.addEventListener('change', updateDays);
+
+            // Initialize the day options on page load
+            updateDays();
+          </script>
+        </div>
+
+        <div class="mt-15 justify-start text-center">
+          <input class=" me-10 text-gray-700 px-2 py-1 rounded-md hover:bg-white hover:text-black hover:animate-pulse" type="submit" value="Create Goal">
+          
+          <a class="text-gray-400 hover:text-gray-800" href="{{ url_for('home') }}">Return Home</a>
+        </div>
+      
+        </form>
+    </div>
+    </div>
+      <script>
+  let modal = document.getElementById('modal');
+   let btn = document.getElementById('open-btn');
+    let button = document.getElementById('ok-btn');
+
+    btn.onclick = function () {
+            modal.style.display = 'block';
+        };
+
+        button.onclick = function () {
+            modal.style.display = 'none';
+        };
+
+window.onclick = function (event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+
+</script>
+
+
+
+    
       </div>
        
       </div>
@@ -460,6 +597,17 @@
          
      
     
+    </script>
+    <script>
+      const goalDates = {{ goal_dates | tojson }};
+
+      goalDates.forEach(date => {
+        const element = document.getElementById(date);
+        if (element) {
+          element.classList.remove('bg-white/30');
+          element.classList.add('bg-orange-300');
+        }
+      });
     </script>
    
     

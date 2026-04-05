@@ -9,7 +9,7 @@ import datetime
 from datetime import date, timedelta
 
 import firebase_admin
-from firebase_admin import credentials, firestore  
+from firebase_admin import credentials, firestore, auth 
 
 import os
 from dotenv import load_dotenv
@@ -98,6 +98,8 @@ def user_credentials():
             headers={'Content-Type': 'application/json'}
         )
         response_data = response.json()
+        uid = response_data.get('localId')
+        print(f"UID: {uid}")
         print(f"Firebase response: {response_data}")
 
         if 'idToken' in response_data:
@@ -118,11 +120,28 @@ def home():
 
     todaysdate = date.today()
     breakstreakdate = todaysdate - timedelta(days=2)
- 
-    
 
     workout_ref = db.collection('workouts')
     docs = workout_ref.stream()
+
+    goal_ref = db.collection('goals')
+    goal_docs = goal_ref.stream()
+
+    gdate = u'goaldate'
+    global goal_dates
+    goal_dates = []
+    
+
+    for doc in goal_docs:
+           
+        doc_dict = doc.to_dict()
+       
+        if gdate in doc_dict:
+            print(f"Goal date: {doc_dict[gdate]}")
+            goal_dates.append(doc_dict[gdate])  
+            
+        else:
+            print("No date field found in document.")
 
     dates = u'date'
     highlighted_dates = []
@@ -160,7 +179,35 @@ def home():
     print(streak)
     
     
-    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak, totaldistance=totaldistance)
+    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak, totaldistance=totaldistance, goal_dates=goal_dates)
+
+@app.route('/home', methods=['POST'])
+def add_goal():
+    goals_ref = db.collection('goals')
+    goalname = request.form.get('goalname')
+    goalmonth = request.form.get('goalmonth')
+    goalday = request.form.get('goalday')
+    goaldate = f"0{goalmonth}-{goalday}"
+
+   
+    
+
+    global goal_dates
+    
+
+  
+
+    if goaldate in goal_dates:
+        print("Goal already exists.")
+        return redirect(url_for('home'))
+    else:
+
+     goals_ref.add({
+        "goalname": goalname,
+        "goaldate": goaldate
+    })
+    return redirect(url_for('home'))
+   
 
 @app.route('/exercise')
 def exercise():
