@@ -187,7 +187,7 @@ def add_goal():
     goalname = request.form.get('goalname')
     goalmonth = request.form.get('goalmonth')
     goalday = request.form.get('goalday')
-    goaldate = f"0{goalmonth}-{goalday}"
+    goaldate = f"{int(goalmonth):02d}-{int(goalday):02d}"
 
    
     
