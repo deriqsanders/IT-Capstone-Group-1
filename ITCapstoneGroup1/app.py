@@ -3,6 +3,7 @@ from collections import Counter
 
 import firebase_admin
 from flask import Flask, redirect, request, render_template, url_for, current_app, g
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import json
 import requests
 import datetime
@@ -23,6 +24,7 @@ api_key = os.getenv('API_KEY')
 
 
 app = Flask(__name__)
+
 
 cred = credentials.Certificate('.secrets/it-senior-capstone-group-1-firebase-adminsdk-fbsvc-01cdb49165.json')
 firebase_admin.initialize_app(cred) 
@@ -81,6 +83,8 @@ def signup_user():
 
 
 @app.route('/', methods=['POST'])
+
+
 def user_credentials():
     email = request.form.get('email')
     password = request.form.get('password')
@@ -98,22 +102,33 @@ def user_credentials():
             headers={'Content-Type': 'application/json'}
         )
         response_data = response.json()
-        uid = response_data.get('localId')
-        print(f"UID: {uid}")
+        uid2 = response_data.get('localId')
+        token = response_data.get('idToken')
+        print(f"UID: {uid2}")
+        print(f"Token: {token}")
+        decoded_token = auth.verify_id_token(token)
+        uid = decoded_token['uid']
+        print(f"Decoded token: {decoded_token}")
+        print(f"UID from decoded token: {uid}")
         print(f"Firebase response: {response_data}")
 
         if 'idToken' in response_data:
             print("Login successful!")
             return redirect(url_for('home'))
+        
+        
         else:
             print("Login failed.")
-            return redirect(url_for('index'))
+            return render_template('index.html', error=True)
     except Exception as e:
         print(f"Error during login: {e}")
         return redirect(url_for('index'))
 
    
 @app.route('/home')
+
+
+
 def home():
 
     currentdate = datetime.datetime.now().strftime("%m-%d")
