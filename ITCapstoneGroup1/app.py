@@ -32,7 +32,8 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 collection = db.collection('workouts')
 doc_ref = db.collection('workouts').document()
-
+global logged_in
+logged_in = False
 
 
 
@@ -88,7 +89,8 @@ def signup_user():
 def user_credentials():
     email = request.form.get('email')
     password = request.form.get('password')
-
+    
+   
     print(f"Received email: {email}, password: {'*' * len(password) if password else None}")
     
     try:
@@ -102,24 +104,31 @@ def user_credentials():
             headers={'Content-Type': 'application/json'}
         )
         response_data = response.json()
-        uid2 = response_data.get('localId')
-        token = response_data.get('idToken')
-        print(f"UID: {uid2}")
-        print(f"Token: {token}")
-        decoded_token = auth.verify_id_token(token)
-        uid = decoded_token['uid']
-        print(f"Decoded token: {decoded_token}")
-        print(f"UID from decoded token: {uid}")
+        
+        #id_token = response_data.get('idToken')
+      
+        #decoded_token = auth.verify_id_token(id_token)
+       
+        #print(f"Decoded token: {decoded_token}")
+        
         print(f"Firebase response: {response_data}")
 
         if 'idToken' in response_data:
+            
             print("Login successful!")
+            
+            global logged_in
+            logged_in = True
+            
+            
             return redirect(url_for('home'))
         
-        
         else:
-            print("Login failed.")
+            
+            logged_in = False
             return render_template('index.html', error=True)
+            
+        
     except Exception as e:
         print(f"Error during login: {e}")
         return redirect(url_for('index'))
@@ -186,6 +195,8 @@ def home():
     lastWorkoutDate = datetime.datetime.strptime(lastdate, "%m-%d").date()
     lastWorkoutDatewithyear = lastWorkoutDate.replace(year=todaysdate.year)
     print(lastWorkoutDatewithyear)
+
+  
     if lastWorkoutDatewithyear > breakstreakdate:
         streak = "🔥"
     else:
@@ -193,8 +204,13 @@ def home():
     
     print(streak)
     
+    if logged_in == False:
+
+        return redirect(url_for('index'))
     
-    return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak, totaldistance=totaldistance, goal_dates=goal_dates)
+    else:
+    
+        return render_template('home.html', workouttotal=workouttotal, highlighted_dates=highlighted_dates, streak=streak, totaldistance=totaldistance, goal_dates=goal_dates)
 
 @app.route('/home', methods=['POST'])
 def add_goal():
@@ -226,8 +242,13 @@ def add_goal():
 
 @app.route('/exercise')
 def exercise():
+    if logged_in == False:
 
-    return render_template('exercise.html')
+        return redirect(url_for('index'))
+    
+    else:
+
+        return render_template('exercise.html')
 
 @app.route('/exercise', methods=['POST'])
 def add_exercise():
@@ -251,6 +272,9 @@ def add_exercise():
         "distance": distance,
         "time": time
     })
+
+    
+
     return redirect(url_for('exercise'))
 
       
