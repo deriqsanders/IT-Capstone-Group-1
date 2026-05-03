@@ -7,8 +7,8 @@ This is a simple web app built for casual and hardcore workout enthusiasts to tr
 Check off the features you implemented (must have at least 4 and 2 are implemeted for you already):
 
 - [X] Feature #1: Login and Register
-- [] Feature #2: Log a workout
-- [] Feature #3: Set new goal
+- [X] Feature #2: Log a workout
+- [X] Feature #3: Set new goal
 - [] Feature #4: Save and load preset
 
 ## Technologies Used
@@ -67,4 +67,4 @@ User can click the "New User?" button to create an account.
 
 ## Author
 
-D'Eriq Sanders
+D'Eriq Sanders & Daniel Dzioba
