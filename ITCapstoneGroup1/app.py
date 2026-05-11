@@ -1,17 +1,12 @@
 
 from collections import Counter
-
 import firebase_admin
-from flask import Flask, redirect, request, render_template, url_for, current_app, g
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from firebase_admin import credentials, firestore
+from flask import Flask, redirect, request, render_template, url_for
 import json
 import requests
 import datetime
 from datetime import date, timedelta
-
-import firebase_admin
-from firebase_admin import credentials, firestore, auth 
-
 import os
 from dotenv import load_dotenv
 
